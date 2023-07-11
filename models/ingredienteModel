@@ -1,0 +1,20 @@
+const mongoose = require("mongoose");
+
+const dataSchema = new mongoose.Schema({
+  nome: {
+    required: true,
+    type: String,
+    trim: true,
+  },
+  progressivo: {
+    required: true,
+    type: String,
+    trim: true,
+  },
+  note: {
+    type: String,
+    trim: true
+  }
+});
+
+module.exports = mongoose.model("Ingrediente", dataSchema);

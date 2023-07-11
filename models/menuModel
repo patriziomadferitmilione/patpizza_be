@@ -1,0 +1,25 @@
+const mongoose = require("mongoose");
+
+const dataSchema = new mongoose.Schema({
+  nome: {
+    required: true,
+    type: String,
+    trim: true,
+  },
+  ingredienti: {
+    required: true,
+    type: Array,
+    trim: true,
+  },
+  note: {
+    type: String,
+    trim: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    trim: true,
+  }
+});
+
+module.exports = mongoose.model("Menu", dataSchema);
