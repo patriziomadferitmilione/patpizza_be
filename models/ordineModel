@@ -22,7 +22,7 @@ const dataSchema = new mongoose.Schema({
   metodoPagamento: {
     required: true,
     type: String,
-    enum: ["CONTANTI", "POS/BANCOMAT", "SATISPAY"],
+    enum: ["CONTANTI", "POS-BANCOMAT", "SATISPAY"],
     trim: true,
   },
   zona: {
