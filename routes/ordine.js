@@ -25,13 +25,12 @@ router.post('/newOrdine', async (req, res) => {
 
 //Get all Method
 router.get('/getOrdini', async (req, res) => {
-    try{
-        const data = await Ordine.find();
-        res.json(data)
-    }
-    catch(error){
-        res.status(500).json({message: error.message})
-    }
+    try {
+        const data = await Ordine.find().sort({ zona: 'asc' }); // Sort in ascending order by 'nome' property
+        res.json(data);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
 })
 
 //Get by ID Method
