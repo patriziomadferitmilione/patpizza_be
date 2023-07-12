@@ -7,6 +7,7 @@ router.post('/newIngrediente', async (req, res) => {
     const data = new Ingrediente({
         nome: req.body.nome,
         progressivo: req.body.progressivo,
+        categoria: req.body.categoria,
         note: req.body.note
     })
 
