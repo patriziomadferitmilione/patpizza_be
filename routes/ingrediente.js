@@ -32,7 +32,7 @@ router.get("/getIngredienti", async (req, res) => {
 //Get by categoria
 router.get("/getIngredienti/popolari", async (req, res) => {
   try {
-    const data = await Ingrediente.find({ categoria: "popolari" });
+    const data = await Ingrediente.find({ categoria: "Popolari" });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -41,7 +41,7 @@ router.get("/getIngredienti/popolari", async (req, res) => {
 
 router.get("/getIngredienti/carne", async (req, res) => {
   try {
-    const data = await Ingrediente.find({ categoria: "carne" });
+    const data = await Ingrediente.find({ categoria: "Carne" });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -50,7 +50,7 @@ router.get("/getIngredienti/carne", async (req, res) => {
 
 router.get("/getIngredienti/formaggi", async (req, res) => {
   try {
-    const data = await Ingrediente.find({ categoria: "formaggi" });
+    const data = await Ingrediente.find({ categoria: "Formaggi" });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -59,7 +59,7 @@ router.get("/getIngredienti/formaggi", async (req, res) => {
 
 router.get("/getIngredienti/verdura", async (req, res) => {
   try {
-    const data = await Ingrediente.find({ categoria: "verdura" });
+    const data = await Ingrediente.find({ categoria: "Verdura" });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -68,7 +68,7 @@ router.get("/getIngredienti/verdura", async (req, res) => {
 
 router.get("/getIngredienti/creme", async (req, res) => {
   try {
-    const data = await Ingrediente.find({ categoria: "creme" });
+    const data = await Ingrediente.find({ categoria: "Creme" });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -77,7 +77,7 @@ router.get("/getIngredienti/creme", async (req, res) => {
 
 router.get("/getIngredienti/vari", async (req, res) => {
   try {
-    const data = await Ingrediente.find({ categoria: "vari" });
+    const data = await Ingrediente.find({ categoria: "Vari" });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
