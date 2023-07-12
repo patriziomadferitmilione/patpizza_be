@@ -21,13 +21,12 @@ router.post("/newMenu", async (req, res) => {
 
 //Get all Method
 router.get("/getMenu", async (req, res) => {
-  try {
-    const data = await Menu.find().sort({ nome: 1 }); // Sort in ascending order by 'nome' property
-    data.sort({ ingredienti: 1 });
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+    try {
+        const data = await Menu.find().sort({ nome: 'asc' }); // Sort in ascending order by 'nome' property
+        res.json(data);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
 });
 
 //Get by ID Method
