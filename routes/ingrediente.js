@@ -23,7 +23,14 @@ router.post('/newIngrediente', async (req, res) => {
 router.get('/getIngredienti', async (req, res) => {
     try {
         const order = ["Popolari", "Carne", "Formaggi", "Verdura", "Creme", "Vari"];
-        const data = await Ingrediente.find().sort({ categoria: { $in: order } });
+        const data = await Ingrediente.find().sort({ 
+            categoria: { 
+                $function() {
+                    const index = order.indexOf(this.categoria);
+                    return index !== -1 ? index : order.length;
+                }
+            }
+        });
         res.json(data);
     } catch (error) {
         res.status(500).json({ message: error.message });
