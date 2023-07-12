@@ -11,6 +11,11 @@ const dataSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  categoria: {
+    type: String,
+    enum: ["Popolari", "Formaggi", "Carne", "Verdura", "Creme", "Vari"],
+    trim: true
+  },
   note: {
     type: String,
     trim: true
