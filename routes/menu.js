@@ -7,6 +7,7 @@ router.post("/newMenu", async (req, res) => {
   const data = new Menu({
     nome: req.body.nome,
     ingredienti: req.body.ingredienti,
+    categoria: req.body.categoria,
     note: req.body.note,
     createdAt: req.body.createdAt,
   });
