@@ -21,12 +21,11 @@ router.post('/newIngrediente', async (req, res) => {
 
 //Get all Method
 router.get('/getIngredienti', async (req, res) => {
-    try{
-        const data = await Ingrediente.find();
-        res.json(data)
-    }
-    catch(error){
-        res.status(500).json({message: error.message})
+    try {
+        const data = await Ingrediente.find().sort({ categoria: 'asc' });
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 })
 
@@ -79,7 +78,7 @@ router.delete('/deleteIngrediente/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const data = await Ingrediente.findByIdAndDelete(id)
-        res.send(`Document with ${data.name} has been deleted..`)
+        res.send(`Ingrediente ${data} has been deleted..`)
     }
     catch (error) {
         res.status(400).json({ message: error.message })
