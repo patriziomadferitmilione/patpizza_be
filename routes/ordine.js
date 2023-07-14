@@ -54,7 +54,16 @@ router.get('/getOrdiniToday', async (req, res) => {
         }
       });
   
-      res.json(counts);
+      // Sort the counts object by key in chronological order
+      const sortedCounts = Object.fromEntries(
+        Object.entries(counts).sort((a, b) => {
+          const aTime = Number(a[0].replace(':', ''));
+          const bTime = Number(b[0].replace(':', ''));
+          return aTime - bTime;
+        })
+      );
+  
+      res.json(sortedCounts);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
