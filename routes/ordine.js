@@ -34,6 +34,32 @@ router.get('/getOrdini', async (req, res) => {
       }
 })
 
+//Get all from today and how many per time slot
+router.get('/getOrdiniToday', async (req, res) => {
+    try {
+      // Get today's date
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set the time to midnight
+  
+      // Find records with 'createdAt' set to today
+      const data = await Ordine.find({ createdAt: { $gte: today } });
+  
+      // Count records for each 'orarioConsegna' enum possible values
+      const counts = {};
+      data.forEach(ordine => {
+        if (ordine.orarioConsegna in counts) {
+          counts[ordine.orarioConsegna]++;
+        } else {
+          counts[ordine.orarioConsegna] = 1;
+        }
+      });
+  
+      res.json(counts);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
 //Get by ID Method
 router.get('/getOrdine/:id', async (req, res) => {
     try{
