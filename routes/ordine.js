@@ -8,6 +8,7 @@ router.post('/newOrdine', async (req, res) => {
         customer_id: req.body.customer_id,
         indirizzo: req.body.indirizzo,
         nomeCampanello: req.body.nomeCampanello,
+        cellulare: req.body.cellulare,
         orarioConsegna: req.body.orarioConsegna,
         metodoPagamento: req.body.metodoPagamento,
         zona: req.body.zona,
