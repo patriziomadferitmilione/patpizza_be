@@ -9,6 +9,7 @@ router.post('/newPizza', async (req, res) => {
         aggiunte: req.body.aggiunte,
         rimozioni: req.body.rimozioni,
         ordine_id: req.body.ordine_id,
+        quantita: req.body.quantita,
         note: req.body.note,
         createdAt: req.body.createdAt
     })

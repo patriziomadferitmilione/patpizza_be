@@ -16,6 +16,10 @@ const dataSchema = new mongoose.Schema({
     type: Array,
     trim: true,
   },
+  quantita: {
+    type: String,
+    trim: true,
+  },
   ordine_id: {
     required: true,
     type: String,
