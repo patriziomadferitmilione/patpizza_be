@@ -80,18 +80,35 @@ router.get('/getOrdine/:id', async (req, res) => {
   }
 })
 
-//Update by ID Method
 router.patch('/updateOrdine/:id', async (req, res) => {
   try {
     const id = req.params.id
+
+    // Check if the provided ID is valid (assuming you're using Mongoose with MongoDB)
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ID format.' })
+    }
+
     const updatedData = req.body
     const options = { new: true }
 
     const result = await Ordine.findByIdAndUpdate(id, updatedData, options)
 
+    // If no result was found, it means there's no document with that ID
+    if (!result) {
+      return res.status(404).json({ message: `No order found with ID: ${id}` })
+    }
+
     res.send(result)
   } catch (error) {
-    res.status(400).json({ message: error.message })
+    console.error('Error occurred while updating order:', error) // Log the full error to the console
+
+    // Send a more detailed error message in the response
+    res.status(400).json({
+      message: 'Error updating order.',
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined, // Optionally include the stack trace in development mode
+    })
   }
 })
 
