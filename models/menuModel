@@ -13,7 +13,7 @@ const dataSchema = new mongoose.Schema({
   },
   categoria: {
     type: String,
-    enum: ['Pizza', 'Focacce', 'Kebab', 'Farinata', 'Altro'],
+    enum: ['Pizza', 'Focacce', 'Kebab', 'Farinata', 'Bevande', 'Altro'],
     trim: true,
   },
   note: {
