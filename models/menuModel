@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const dataSchema = new mongoose.Schema({
   nome: {
@@ -13,7 +13,7 @@ const dataSchema = new mongoose.Schema({
   },
   categoria: {
     type: String,
-    enum: ["Pizza", "Kebab", "Vari"],
+    enum: ['Pizza', 'Focacce', 'Kebab', 'Farinata', 'Altro'],
     trim: true,
   },
   note: {
@@ -24,7 +24,7 @@ const dataSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
     trim: true,
-  }
-});
+  },
+})
 
-module.exports = mongoose.model("Menu", dataSchema);
+module.exports = mongoose.model('Menu', dataSchema)
