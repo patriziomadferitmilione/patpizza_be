@@ -158,6 +158,25 @@ router.patch('/addRimozioni/:id', async (req, res) => {
     const id = req.params.id
     const rimozioni = req.body.rimozioni
 
+    // Fetch nome for each rimozioni using axios and replace in the array
+    for (let i = 0; i < rimozioni.length; i++) {
+      try {
+        const response = await axios.get(
+          `https://patpizza-be.onrender.com/ingrediente/getIngredienteProg/${rimozioni[i]}`
+        )
+
+        if (response.data && response.data.nome) {
+          rimozioni[i] = response.data.nome
+        } else {
+          // Handle case where no nome was returned or there was an issue with the API response
+          throw new Error(`Could not fetch nome for rimozioni: ${rimozioni[i]}`)
+        }
+      } catch (err) {
+        // Log the error and continue with the next iteration (or handle it differently based on your requirements)
+        console.error(err.message)
+      }
+    }
+
     const result = await Pizza.findByIdAndUpdate(
       id,
       { $push: { rimozioni: { $each: rimozioni } } },
