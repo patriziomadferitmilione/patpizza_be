@@ -32,6 +32,29 @@ router.get('/getPizze', async (req, res) => {
   }
 })
 
+// Duplicate by ID Method
+router.post('/duplicatePizza/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    const originalPizza = await Pizza.findById(id)
+
+    if (!originalPizza) {
+      return res.status(404).json({ message: 'Pizza not found' })
+    }
+
+    // Create a copy of the originalPizza and remove its _id property
+    const copiedPizzaData = originalPizza.toObject()
+    delete copiedPizzaData._id
+
+    const copiedPizza = new Pizza(copiedPizzaData)
+
+    const savedPizza = await copiedPizza.save()
+    res.status(200).json({ _id: savedPizza._id, ...savedPizza._doc })
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+})
+
 //Get by ID Method
 router.get('/getPizza/:id', async (req, res) => {
   try {
