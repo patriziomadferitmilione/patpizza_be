@@ -37,7 +37,7 @@ router.get('/getOrdini', async (req, res) => {
 })
 
 //Get all from today and how many per time slot
-router.get('/getOrdiniToday', async (req, res) => {
+router.get('/getOrdiniTodayCount', async (req, res) => {
   try {
     // Get today's date
     const today = new Date()
@@ -66,6 +66,23 @@ router.get('/getOrdiniToday', async (req, res) => {
     )
 
     res.json(sortedCounts)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+//Get all from today
+router.get('/getOrdiniToday', async (req, res) => {
+  try {
+    // Get today's date
+    const today = new Date()
+    today.setHours(0, 0, 0, 0) // Set the time to midnight
+
+    // Find records with 'createdAt' set to today
+    const data = await Ordine.find({ createdAt: { $gte: today } })
+
+    // Return the found records
+    res.json(data)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
