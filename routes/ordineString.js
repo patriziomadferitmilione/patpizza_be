@@ -6,6 +6,7 @@ const OrdineString = require('../models/ordineStringModel')
 router.post('/newOrdineString', async (req, res) => {
   const data = new OrdineString({
     ordineString: req.body.ordineString,
+    ordine_id: req.body.odine_id,
     createdAt: req.body.createdAt,
   })
 
@@ -32,6 +33,28 @@ router.get('/getOrdineString/:id', async (req, res) => {
   try {
     const data = await OrdineString.findById(req.params.id)
     res.json(data)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
+//Get by ordineID Method
+router.get('/getOrdineStringByOrdineId/:ordine_id', async (req, res) => {
+  try {
+    const data = await OrdineString.find({ ordine_id: req.params.ordine_id })
+      .sort({ createdAt: -1 })
+      .limit(1)
+      .exec()
+
+    // Check if data was found
+    if (data.length === 0) {
+      res
+        .status(404)
+        .json({ message: 'No OrdineString found for the provided ordine_id.' })
+      return
+    }
+
+    res.json(data[0]) // Return the most recent ordineString
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
