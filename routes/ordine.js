@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 //Post Method
 router.post('/newOrdine', async (req, res) => {
   const data = new Ordine({
-    customer_id: req.body.customer_id,
     indirizzo: req.body.indirizzo,
     nomeCampanello: req.body.nomeCampanello,
     cellulare: req.body.cellulare,
