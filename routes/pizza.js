@@ -10,6 +10,7 @@ router.post('/newPizza', async (req, res) => {
     rimozioni: req.body.rimozioni,
     ordine_id: req.body.ordine_id,
     quantita: req.body.quantita,
+    categoria: req.body.categoria,
     note: req.body.note,
     createdAt: req.body.createdAt,
   })
