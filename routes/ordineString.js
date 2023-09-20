@@ -6,7 +6,7 @@ const OrdineString = require('../models/ordineStringModel')
 router.post('/newOrdineString', async (req, res) => {
   const data = new OrdineString({
     ordineString: req.body.ordineString,
-    ordine_id: req.body.odine_id,
+    ordine_id: req.body.ordine_id,
     createdAt: req.body.createdAt,
   })
 
