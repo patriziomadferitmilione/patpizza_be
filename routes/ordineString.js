@@ -41,7 +41,7 @@ router.get('/getOrdineString/:id', async (req, res) => {
 //Get by ordineID Method
 router.get('/getOrdineStringByOrdineId/:ordine_id', async (req, res) => {
   try {
-    const data = await OrdineString.find({ ordine_id: req.params.ordine_id })
+    const data = await OrdineString.find({ ordine_id: req.ordine_id })
       .sort({ createdAt: -1 })
       .limit(1)
       .exec()
