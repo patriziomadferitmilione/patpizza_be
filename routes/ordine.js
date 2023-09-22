@@ -140,5 +140,15 @@ router.delete('/deleteOrdine/:id', async (req, res) => {
   }
 })
 
+// Delete all
+router.delete('/deleteAllOrdines', async (req, res) => {
+  try {
+    await Ordine.deleteMany({})
+    res.send('All Ordine documents have been deleted.')
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+})
+
 // Export the router
 module.exports = router
