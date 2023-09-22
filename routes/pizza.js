@@ -201,5 +201,15 @@ router.delete('/deletePizza/:id', async (req, res) => {
   }
 })
 
+// delete all
+router.delete('/deleteAllPizzas', async (req, res) => {
+  try {
+    await Pizza.deleteMany({})
+    res.send('All Pizza documents have been deleted.')
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+})
+
 // Export the router
 module.exports = router
