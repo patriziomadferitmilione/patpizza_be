@@ -35,6 +35,28 @@ router.get('/getOrdini', async (req, res) => {
   }
 })
 
+router.get('/getOrdiniByDate', async (req, res) => {
+  try {
+    const startDate = new Date(req.query.startDate) // Extract the start date from the query string
+    const endDate = new Date(req.query.endDate) // Extract the end date from the query string
+
+    // Make sure the time for the dates is set properly
+    startDate.setHours(0, 0, 0, 0)
+    endDate.setHours(23, 59, 59, 999)
+
+    const data = await Ordine.find({
+      createdAt: {
+        $gte: startDate, // Greater than or equal to the start date
+        $lte: endDate, // Less than or equal to the end date
+      },
+    }).sort({ zona: 'asc' })
+
+    res.json(data)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 //Get all from today and how many per time slot
 router.get('/getOrdiniTodayCount', async (req, res) => {
   try {
