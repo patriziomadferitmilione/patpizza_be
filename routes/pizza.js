@@ -90,7 +90,7 @@ router.get('/getPizzasByZonaAndTime', async (req, res) => {
     const pizzas = await Pizza.find()
 
     // Fetch all orders, assuming an Order model exists
-    const orders = await Order.find().sort({
+    const orders = await Ordine.find().sort({
       zona: 'asc',
       orarioConsegna: 'asc',
     })
