@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Pizza = require('../models/pizzaModel')
 
+const Ordine = require('../models/ordineModel')
+
 //Post Method
 router.post('/newPizza', async (req, res) => {
   const data = new Pizza({
@@ -84,27 +86,38 @@ router.get('/getOrdinePizze/:ordine_id', async (req, res) => {
 // Get pizzas from zonas and times
 router.get('/getPizzasByZonaAndTime', async (req, res) => {
   try {
-    // Fetch all orders sorted by 'zona' in ascending order
-    const orders = await Ordine.find().sort({ zona: 'asc' })
+    // Fetch all pizzas
+    const pizzas = await Pizza.find()
 
-    // Initialize an empty object to store sorted data
+    // Fetch all orders, assuming an Order model exists
+    const orders = await Order.find().sort({
+      zona: 'asc',
+      orarioConsegna: 'asc',
+    })
+
+    // Create an empty object to store sorted data
     const sortedPizzas = {}
 
     // Loop through all orders
     orders.forEach((order) => {
       const zona = order.zona
       const orarioConsegna = order.orarioConsegna
-      const pizzas = order.pizzas // Assuming 'pizzas' is an array in each 'Ordine' document
+      const orderId = order._id.toString()
 
-      // Initialize zona in sortedPizzas if not exists
+      // Filter pizzas that belong to the current order
+      const pizzasForOrder = pizzas.filter(
+        (pizza) => pizza.ordine_id === orderId
+      )
+
+      // Initialize the zona in sortedPizzas if not exists
       if (!sortedPizzas[zona]) {
         sortedPizzas[zona] = []
       }
 
       // Add pizzas to the corresponding zona
-      pizzas.forEach((pizza) => {
+      pizzasForOrder.forEach((pizza) => {
         sortedPizzas[zona].push({
-          ...pizza,
+          ...pizza._doc,
           orarioConsegna,
         })
       })
@@ -112,7 +125,9 @@ router.get('/getPizzasByZonaAndTime', async (req, res) => {
 
     // Sort pizzas by 'orarioConsegna' in each zona
     for (const zona in sortedPizzas) {
-      sortedPizzas[zona].sort((a, b) => a.orarioConsegna - b.orarioConsegna)
+      sortedPizzas[zona].sort(
+        (a, b) => new Date(a.orarioConsegna) - new Date(b.orarioConsegna)
+      )
     }
 
     // Return the sorted object
