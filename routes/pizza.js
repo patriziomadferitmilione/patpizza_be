@@ -81,6 +81,47 @@ router.get('/getOrdinePizze/:ordine_id', async (req, res) => {
   }
 })
 
+// Get pizzas from zonas and times
+router.get('/getPizzasByZonaAndTime', async (req, res) => {
+  try {
+    // Fetch all orders sorted by 'zona' in ascending order
+    const orders = await Ordine.find().sort({ zona: 'asc' })
+
+    // Initialize an empty object to store sorted data
+    const sortedPizzas = {}
+
+    // Loop through all orders
+    orders.forEach((order) => {
+      const zona = order.zona
+      const orarioConsegna = order.orarioConsegna
+      const pizzas = order.pizzas // Assuming 'pizzas' is an array in each 'Ordine' document
+
+      // Initialize zona in sortedPizzas if not exists
+      if (!sortedPizzas[zona]) {
+        sortedPizzas[zona] = []
+      }
+
+      // Add pizzas to the corresponding zona
+      pizzas.forEach((pizza) => {
+        sortedPizzas[zona].push({
+          ...pizza,
+          orarioConsegna,
+        })
+      })
+    })
+
+    // Sort pizzas by 'orarioConsegna' in each zona
+    for (const zona in sortedPizzas) {
+      sortedPizzas[zona].sort((a, b) => a.orarioConsegna - b.orarioConsegna)
+    }
+
+    // Return the sorted object
+    res.json(sortedPizzas)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 //Update by ID Method
 router.patch('/updatePizza/:id', async (req, res) => {
   try {
